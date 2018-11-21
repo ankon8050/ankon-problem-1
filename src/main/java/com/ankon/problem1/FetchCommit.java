@@ -13,6 +13,8 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.PathFilter;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,8 +24,13 @@ import java.util.Map;
 
 public class FetchCommit {
 
+    static Repository repo;
+
     public static void main(String[] args) throws IOException, GitAPIException {
-        String REMOTE_URL = "https://gitlab.com/AaviJit/muslimei.git";
+        String REMOTE_URL;
+
+        REMOTE_URL = "https://gitlab.com/AaviJit/muslimei.git";
+        REMOTE_URL = "https://gitlab.com/ankon/problem-1.git";
 
         File localPath = File.createTempFile("TestGitRepository", "");
         if (!localPath.delete()) {
@@ -35,7 +42,7 @@ public class FetchCommit {
         // Git git = new Git(repo);
         Git git = Git.cloneRepository().setURI(REMOTE_URL).setDirectory(localPath).call();
 
-        Repository repo = git.getRepository();
+        repo = git.getRepository();
         RevWalk walk = new RevWalk(repo);
 
         System.out.println("Having repository: " + git.getRepository().getDirectory());
@@ -115,6 +122,40 @@ public class FetchCommit {
         for (DiffEntry diff : diffs) {
             System.out.println("Diff: " + diff.getChangeType() + ": " +
                     (diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath()));
+
+            if (diff.getChangeType().equals("MODIFY")) {
+                generateFiles((diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath()), newCommit);
+            }
+        }
+    }
+
+    private static void generateFiles(String path, String commitId) throws IOException {
+        ObjectId lastCommitId = repo.resolve(commitId);
+
+        // a RevWalk allows to walk over commits based on some filtering that is defined
+        try (RevWalk revWalk = new RevWalk(repo)) {
+            RevCommit commit = revWalk.parseCommit(lastCommitId);
+            // and using commit's tree find the path
+            RevTree tree = commit.getTree();
+            System.out.println("Having tree: " + tree);
+
+            // now try to find a specific file
+            try (TreeWalk treeWalk = new TreeWalk(repo)) {
+                treeWalk.addTree(tree);
+                treeWalk.setRecursive(true);
+                treeWalk.setFilter(PathFilter.create(path));
+                if (!treeWalk.next()) {
+                    throw new IllegalStateException("Did not find expected file");
+                }
+
+                ObjectId objectId = treeWalk.getObjectId(0);
+                ObjectLoader loader = repo.open(objectId);
+
+                // and then one can the loader to read the file
+                loader.copyTo(System.out);
+            }
+
+            revWalk.dispose();
         }
     }
 
