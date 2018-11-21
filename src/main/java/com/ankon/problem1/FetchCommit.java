@@ -120,10 +120,11 @@ public class FetchCommit {
 
         System.out.println("Found: " + diffs.size() + " differences");
         for (DiffEntry diff : diffs) {
-            System.out.println("Diff: " + diff.getChangeType() + ": " +
-                    (diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath()));
+            String output = "Diff: " + diff.getChangeType() + ": " +
+                    (diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath());
+            System.out.println(output);
 
-            if (diff.getChangeType().equals("MODIFY")) {
+            if (output.contains("MODIFY")) {
                 generateFiles((diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath()), newCommit);
             }
         }
