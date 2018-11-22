@@ -1,5 +1,6 @@
 package com.ankon.problem1;
 
+import com.ankon.problem1.domain.Result;
 import com.ankon.problem1.helper.CookbookHelper;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
@@ -21,6 +22,7 @@ import org.eclipse.jgit.treewalk.filter.PathFilter;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,7 @@ import java.util.Map;
 public class FetchCommit {
 
     static Repository repo;
+    static List<Result> results = new ArrayList<>();
 
     public static void main(String[] args) throws IOException, GitAPIException {
         String REMOTE_URL;
@@ -108,12 +111,12 @@ public class FetchCommit {
                         newCommit = walk1.parseCommit(repo.resolve(commit.getName()));
                     }
 
-                    System.out.println("LogCommit: " + newCommit);
+                    // System.out.println("LogCommit: " + newCommit);
                     String logMessage = newCommit.getFullMessage();
-                    System.out.println("LogMessage: " + logMessage);
+                    // System.out.println("LogMessage: " + logMessage);
                     //Print diff of the commit with the previous one.
                     // System.out.println(getDiffOfCommit(newCommit));
-                    processResult(getDiffOfCommit(newCommit));
+                    processResult(getDiffOfCommit(newCommit), commit.getName(), "");
 
                     System.out.println("----------------End------------------");
                     System.out.println();
@@ -125,23 +128,54 @@ public class FetchCommit {
 //                "8e4248d4edac130423ed935f76e2acd94d0ddc48^",
 //                "8e4248d4edac130423ed935f76e2acd94d0ddc48");
 
+        PrintWriter pw = new PrintWriter(new File("test.csv"));
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Commit SHA");
+        sb.append(",");
+        sb.append("Java File");
+        sb.append(",");
+        sb.append("Old function signature");
+        sb.append(",");
+        sb.append("New function signature");
+        sb.append("\n");
+
+        for (Result res: results) {
+            sb.append(res.getSHA());
+            sb.append(",");
+            sb.append(res.getFilename());
+            sb.append(",");
+            sb.append(res.getOldSignature());
+            sb.append(",");
+            sb.append(res.getNewSignature());
+            sb.append("\n");
+        }
+
+        pw.write(sb.toString());
+        pw.close();
+
         System.out.println("Done");
     }
 
-    private static void processResult(String result) throws IOException {
+    private static void processResult(String result, String SHA, String filename) throws IOException {
         String[] lines = result.split("\n");
 
-        locateTargetChanges(lines, "public void");
-        locateTargetChanges(lines, "public int");
-        locateTargetChanges(lines, "public String");
+        locateTargetChanges(lines, "public void", SHA, filename);
+        locateTargetChanges(lines, "public int", SHA, filename);
+        locateTargetChanges(lines, "public String", SHA, filename);
+        locateTargetChanges(lines, "public double", SHA, filename);
+        locateTargetChanges(lines, "private void", SHA, filename);
+        locateTargetChanges(lines, "private int", SHA, filename);
+        locateTargetChanges(lines, "private String", SHA, filename);
+        locateTargetChanges(lines, "private double", SHA, filename);
     }
 
-    private static void locateTargetChanges(String[] lines, String declaration) {
-        for (String line: lines) {
+    private static void locateTargetChanges(String[] lines, String declaration, String SHA, String filename) {
+        for (int j = 0; j < lines.length; j++) {
+            String line = lines[j];
+
             if (line.charAt(0) == '+'
                     && line.contains(declaration)) {
-                System.out.println(line);
-
                 String temp = line.replaceAll("\\s", "");
                 String method1 = temp.substring(temp.indexOf("+") + 1, temp.indexOf("("));
 
@@ -151,8 +185,27 @@ public class FetchCommit {
                             && temp1.contains("(") && temp1.contains(")")) {
                         String method2 = temp1.replaceAll("\\s", "");
 
-                        if (method2.substring(method2.indexOf("-") + 1, method2.indexOf("(")).equals(method1))
+                        if (method2.substring(method2.indexOf("-") + 1, method2.indexOf("(")).equals(method1)) {
+                            System.out.println(line);
                             System.out.println(lines[i]);
+
+                            String javaFile = filename;
+                            for (int k = j; k > 0; k--) {
+                                if (lines[k].contains("index")) {
+                                    if ((k - 1) >= 0 && lines[k-1].contains("diff")) {
+                                        String[] tokenize = lines[k+2].split("/");
+                                        javaFile = tokenize[tokenize.length - 1];
+                                        break;
+                                    }
+                                }
+                            }
+
+                            Result result = new Result(SHA, javaFile,
+                                    lines[i].substring(lines[i].indexOf("p"), lines[i].length() - 1),
+                                    line.substring(line.indexOf("p"), line.length() - 1));
+                            System.out.println(result.toString());
+                            results.add(result);
+                        }
                     }
                 }
             }
