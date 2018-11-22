@@ -10,4 +10,8 @@ public class test1 {
 
     }
 
+    public String method3() {
+        return "Hello World!";
+    }
+
 }

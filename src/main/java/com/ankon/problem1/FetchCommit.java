@@ -131,9 +131,15 @@ public class FetchCommit {
     private static void processResult(String result) throws IOException {
         String[] lines = result.split("\n");
 
+        locateTargetChanges(lines, "public void");
+        locateTargetChanges(lines, "public int");
+        locateTargetChanges(lines, "public String");
+    }
+
+    private static void locateTargetChanges(String[] lines, String declaration) {
         for (String line: lines) {
             if (line.charAt(0) == '+'
-                    && line.contains("public void")) {
+                    && line.contains(declaration)) {
                 System.out.println(line);
 
                 String temp = line.replaceAll("\\s", "");
@@ -142,9 +148,11 @@ public class FetchCommit {
                 for (int i = 0; i < lines.length; i++) {
                     String temp1 = lines[i];
                     if (temp1.charAt(0) == '-'
-                            && temp1.contains("(") && temp1.contains(")")
-                            && temp1.substring(temp1.indexOf("-") + 1, temp1.indexOf("(")).equals(method1)) {
-                        System.out.println(lines[i]);
+                            && temp1.contains("(") && temp1.contains(")")) {
+                        String method2 = temp1.replaceAll("\\s", "");
+
+                        if (method2.substring(method2.indexOf("-") + 1, method2.indexOf("(")).equals(method1))
+                            System.out.println(lines[i]);
                     }
                 }
             }
