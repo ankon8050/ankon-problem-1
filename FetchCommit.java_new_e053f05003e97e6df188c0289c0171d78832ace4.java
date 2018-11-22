@@ -1,7 +1,6 @@
 package com.ankon.problem1;
 
 import com.ankon.problem1.helper.CookbookHelper;
-import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -17,7 +16,8 @@ import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -125,17 +125,13 @@ public class FetchCommit {
             System.out.println(output);
 
             if (output.contains("MODIFY")) {
-                generateFiles((diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath()), newCommit, true);
-                generateFiles(diff.getOldPath(), oldCommit, false);
+                generateFiles((diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath()), newCommit);
             }
         }
     }
 
-    private static void generateFiles(String path, String commitId, boolean flag) throws IOException {
+    private static void generateFiles(String path, String commitId) throws IOException {
         ObjectId lastCommitId = repo.resolve(commitId);
-
-        if (!path.contains(".java"))
-            return;
 
         // a RevWalk allows to walk over commits based on some filtering that is defined
         try (RevWalk revWalk = new RevWalk(repo)) {
@@ -156,34 +152,8 @@ public class FetchCommit {
                 ObjectId objectId = treeWalk.getObjectId(0);
                 ObjectLoader loader = repo.open(objectId);
 
-                System.out.println("-------------------------------------");
                 // and then one can the loader to read the file
-                // loader.copyTo(System.out);
-
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ObjectStream objectStream = loader.openStream();
-
-                loader.copyTo(baos);
-
-                String[] fileName = path.split("/");
-
-                String name = "";
-                if (flag) {
-                    name = fileName[fileName.length - 1] + "_new_" + commitId + ".java";
-                } else {
-                    name = fileName[fileName.length - 1] + "_old_" + commitId + ".java";
-                }
-
-                try (OutputStream outputStream = new FileOutputStream(name)) {
-                    baos.writeTo(outputStream);
-                    baos.close();
-                    outputStream.close();
-                }
-                System.out.println("-------------------------------------");
-                System.out.println(path);
-                System.out.println("-------------------------------------");
-                System.out.println();
-                System.out.println();
+                loader.copyTo(System.out);
             }
 
             revWalk.dispose();

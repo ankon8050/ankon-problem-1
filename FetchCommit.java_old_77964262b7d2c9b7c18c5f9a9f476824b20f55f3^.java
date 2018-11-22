@@ -1,7 +1,6 @@
 package com.ankon.problem1;
 
 import com.ankon.problem1.helper.CookbookHelper;
-import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -14,23 +13,17 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class FetchCommit {
 
-    static Repository repo;
-
     public static void main(String[] args) throws IOException, GitAPIException {
-        String REMOTE_URL;
-
-        REMOTE_URL = "https://gitlab.com/AaviJit/muslimei.git";
-        REMOTE_URL = "https://gitlab.com/ankon/problem-1.git";
+        String REMOTE_URL = "https://gitlab.com/AaviJit/muslimei.git";
 
         File localPath = File.createTempFile("TestGitRepository", "");
         if (!localPath.delete()) {
@@ -42,7 +35,7 @@ public class FetchCommit {
         // Git git = new Git(repo);
         Git git = Git.cloneRepository().setURI(REMOTE_URL).setDirectory(localPath).call();
 
-        repo = git.getRepository();
+        Repository repo = git.getRepository();
         RevWalk walk = new RevWalk(repo);
 
         System.out.println("Having repository: " + git.getRepository().getDirectory());
@@ -120,73 +113,8 @@ public class FetchCommit {
 
         System.out.println("Found: " + diffs.size() + " differences");
         for (DiffEntry diff : diffs) {
-            String output = "Diff: " + diff.getChangeType() + ": " +
-                    (diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath());
-            System.out.println(output);
-
-            if (output.contains("MODIFY")) {
-                generateFiles((diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath()), newCommit, true);
-                generateFiles(diff.getOldPath(), oldCommit, false);
-            }
-        }
-    }
-
-    private static void generateFiles(String path, String commitId, boolean flag) throws IOException {
-        ObjectId lastCommitId = repo.resolve(commitId);
-
-        if (!path.contains(".java"))
-            return;
-
-        // a RevWalk allows to walk over commits based on some filtering that is defined
-        try (RevWalk revWalk = new RevWalk(repo)) {
-            RevCommit commit = revWalk.parseCommit(lastCommitId);
-            // and using commit's tree find the path
-            RevTree tree = commit.getTree();
-            System.out.println("Having tree: " + tree);
-
-            // now try to find a specific file
-            try (TreeWalk treeWalk = new TreeWalk(repo)) {
-                treeWalk.addTree(tree);
-                treeWalk.setRecursive(true);
-                treeWalk.setFilter(PathFilter.create(path));
-                if (!treeWalk.next()) {
-                    throw new IllegalStateException("Did not find expected file");
-                }
-
-                ObjectId objectId = treeWalk.getObjectId(0);
-                ObjectLoader loader = repo.open(objectId);
-
-                System.out.println("-------------------------------------");
-                // and then one can the loader to read the file
-                // loader.copyTo(System.out);
-
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ObjectStream objectStream = loader.openStream();
-
-                loader.copyTo(baos);
-
-                String[] fileName = path.split("/");
-
-                String name = "";
-                if (flag) {
-                    name = fileName[fileName.length - 1] + "_new_" + commitId + ".java";
-                } else {
-                    name = fileName[fileName.length - 1] + "_old_" + commitId + ".java";
-                }
-
-                try (OutputStream outputStream = new FileOutputStream(name)) {
-                    baos.writeTo(outputStream);
-                    baos.close();
-                    outputStream.close();
-                }
-                System.out.println("-------------------------------------");
-                System.out.println(path);
-                System.out.println("-------------------------------------");
-                System.out.println();
-                System.out.println();
-            }
-
-            revWalk.dispose();
+            System.out.println("Diff: " + diff.getChangeType() + ": " +
+                    (diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath()));
         }
     }
 
