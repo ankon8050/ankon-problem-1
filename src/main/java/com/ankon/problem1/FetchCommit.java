@@ -133,8 +133,20 @@ public class FetchCommit {
 
         for (String line: lines) {
             if (line.charAt(0) == '+'
-                    && line.contains("private static")) {
+                    && line.contains("public void")) {
                 System.out.println(line);
+
+                String temp = line.replaceAll("\\s", "");
+                String method1 = temp.substring(temp.indexOf("+") + 1, temp.indexOf("("));
+
+                for (int i = 0; i < lines.length; i++) {
+                    String temp1 = lines[i];
+                    if (temp1.charAt(0) == '-'
+                            && temp1.contains("(") && temp1.contains(")")
+                            && temp1.substring(temp1.indexOf("-") + 1, temp1.indexOf("(")).equals(method1)) {
+                        System.out.println(lines[i]);
+                    }
+                }
             }
         }
     }

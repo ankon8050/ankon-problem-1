@@ -6,7 +6,7 @@ public class test1 {
 
     }
 
-    public void method2(int arg1) {
+    public void method2(int arg1, int arg2) {
 
     }
 
