@@ -6,6 +6,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -18,6 +19,8 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -94,10 +97,23 @@ public class FetchCommit {
                     System.out.println(new Date(commit.getCommitTime() * 1000L));
                     System.out.println(commit.getFullMessage());
 
-                    if (commits.iterator().hasNext())
-                        listDiff(repo, git,
-                            commit.getName() + "^",
-                            commit.getName());
+//                    if (commits.iterator().hasNext())
+//                        listDiff(repo, git,
+//                            commit.getName() + "^",
+//                            commit.getName());
+
+                    //Get the commit you are looking for.
+                    RevCommit newCommit;
+                    try (RevWalk walk1 = new RevWalk(repo)) {
+                        newCommit = walk1.parseCommit(repo.resolve(commit.getName()));
+                    }
+
+                    System.out.println("LogCommit: " + newCommit);
+                    String logMessage = newCommit.getFullMessage();
+                    System.out.println("LogMessage: " + logMessage);
+                    //Print diff of the commit with the previous one.
+                    // System.out.println(getDiffOfCommit(newCommit));
+                    processResult(getDiffOfCommit(newCommit));
 
                     System.out.println("----------------End------------------");
                     System.out.println();
@@ -110,6 +126,66 @@ public class FetchCommit {
 //                "8e4248d4edac130423ed935f76e2acd94d0ddc48");
 
         System.out.println("Done");
+    }
+
+    private static void processResult(String result) throws IOException {
+        String[] lines = result.split("\n");
+
+        for (String line: lines) {
+            if (line.charAt(0) == '+'
+                    && line.contains("private static")) {
+                System.out.println(line);
+            }
+        }
+    }
+
+    //Helper gets the diff as a string.
+    private static String getDiffOfCommit(RevCommit newCommit) throws IOException {
+
+        //Get commit that is previous to the current one.
+        RevCommit oldCommit = getPrevHash(newCommit);
+        if(oldCommit == null){
+            return "Start of repo";
+        }
+        //Use treeIterator to diff.
+        AbstractTreeIterator oldTreeIterator = getCanonicalTreeParser(oldCommit);
+        AbstractTreeIterator newTreeIterator = getCanonicalTreeParser(newCommit);
+        OutputStream outputStream = new ByteArrayOutputStream();
+        try (DiffFormatter formatter = new DiffFormatter(outputStream)) {
+            formatter.setRepository(repo);
+            formatter.format(oldTreeIterator, newTreeIterator);
+        }
+        String diff = outputStream.toString();
+        return diff;
+    }
+    //Helper function to get the previous commit.
+    public static RevCommit getPrevHash(RevCommit commit)  throws  IOException {
+
+        try (RevWalk walk = new RevWalk(repo)) {
+            // Starting point
+            walk.markStart(commit);
+            int count = 0;
+            for (RevCommit rev : walk) {
+                // got the previous commit.
+                if (count == 1) {
+                    return rev;
+                }
+                count++;
+            }
+            walk.dispose();
+        }
+        //Reached end and no previous commits.
+        return null;
+    }
+    //Helper function to get the tree of the changes in a commit. Written by Rüdiger Herrmann
+    private static AbstractTreeIterator getCanonicalTreeParser(ObjectId commitId) throws IOException {
+        try (RevWalk walk = new RevWalk(repo)) {
+            RevCommit commit = walk.parseCommit(commitId);
+            ObjectId treeId = commit.getTree().getId();
+            try (ObjectReader reader = repo.newObjectReader()) {
+                return new CanonicalTreeParser(null, reader, treeId);
+            }
+        }
     }
 
     private static void listDiff(Repository repository, Git git, String oldCommit, String newCommit) throws GitAPIException, IOException {
@@ -125,17 +201,97 @@ public class FetchCommit {
             System.out.println(output);
 
             if (output.contains("MODIFY")) {
-                generateFiles((diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath()), newCommit, true);
-                generateFiles(diff.getOldPath(), oldCommit, false);
+                String filename1, filename2;
+                filename1 = generateFiles((diff.getOldPath().equals(diff.getNewPath()) ? diff.getNewPath() : diff.getOldPath() + " -> " + diff.getNewPath()), newCommit, true);
+                filename2 = generateFiles(diff.getOldPath(), oldCommit, false);
+
+                if (filename1 != null && filename2 != null) {
+                    System.out.println("-------------Compare Start-------------");
+                    // compareFiles1(filename1, filename2);
+                    //Get the commit you are looking for.
+                    RevCommit commit;
+                    try (RevWalk walk1 = new RevWalk(repo)) {
+                        commit = walk1.parseCommit(repo.resolve(newCommit));
+                    }
+
+                    System.out.println("LogCommit: " + newCommit);
+                    String logMessage = commit.getFullMessage();
+                    System.out.println("LogMessage: " + logMessage);
+                    //Print diff of the commit with the previous one.
+                    System.out.println(getDiffOfCommit(commit));
+                    System.out.println("--------------Compare End-------------");
+                }
             }
         }
     }
 
-    private static void generateFiles(String path, String commitId, boolean flag) throws IOException {
+    private static void compareFiles(String filename1, String filename2) throws IOException {
+        long start = System.nanoTime();
+        FileChannel ch1 = new RandomAccessFile(filename1, "rw").getChannel();
+        FileChannel ch2 = new RandomAccessFile(filename2, "rw").getChannel();
+        if (ch1.size() != ch2.size()) {
+            System.out.println("Files have different length");
+        }
+        long size = ch1.size();
+        ByteBuffer m1 = ch1.map(FileChannel.MapMode.READ_WRITE, 0L, size);
+        ByteBuffer m2 = ch2.map(FileChannel.MapMode.READ_WRITE, 0L, size);
+        for (int pos = 0; pos < size; pos++) {
+            if (m1.get(pos) != m2.get(pos)) {
+                System.out.println(m1.get(pos));
+            }
+        }
+        System.out.println("Files are identical, you can delete one of them.");
+        long end = System.nanoTime();
+        System.out.print("Execution time: " + (end - start) / 1000000 + "ms");
+    }
+
+    private static void compareFiles1(String filename1, String filename2) throws IOException {
+        BufferedReader reader1 = new BufferedReader(new FileReader(filename1));
+        BufferedReader reader2 = new BufferedReader(new FileReader(filename2));
+
+        String line1 = reader1.readLine();
+        String line2 = reader2.readLine();
+
+        boolean areEqual = true;
+        int lineNum = 1;
+
+        while (line1 != null || line2 != null)
+        {
+            areEqual = true;
+
+            if(line1 == null || line2 == null) {
+                areEqual = false;
+            }
+            else if(! line1.equalsIgnoreCase(line2)) {
+                areEqual = false;
+            }
+
+            if(areEqual) {
+                // System.out.println("Two files have same content.");
+            }
+            else {
+                // System.out.println("Two files have different content. They differ at line "+lineNum);
+                System.out.println("File1 has "+line1+" and File2 has "+line2+" at line "+lineNum);
+            }
+
+            line1 = reader1.readLine();
+            line2 = reader2.readLine();
+
+            lineNum++;
+        }
+
+        reader1.close();
+
+        reader2.close();
+    }
+
+    private static String generateFiles(String path, String commitId, boolean flag) throws IOException {
         ObjectId lastCommitId = repo.resolve(commitId);
 
         if (!path.contains(".java"))
-            return;
+            return null;
+
+        String name = "";
 
         // a RevWalk allows to walk over commits based on some filtering that is defined
         try (RevWalk revWalk = new RevWalk(repo)) {
@@ -167,7 +323,6 @@ public class FetchCommit {
 
                 String[] fileName = path.split("/");
 
-                String name = "";
                 if (flag) {
                     name = fileName[fileName.length - 1] + "_new_" + commitId + ".java";
                 } else {
@@ -188,6 +343,8 @@ public class FetchCommit {
 
             revWalk.dispose();
         }
+
+        return name;
     }
 
     private static AbstractTreeIterator prepareTreeParser(Repository repository, String objectId) throws IOException {
