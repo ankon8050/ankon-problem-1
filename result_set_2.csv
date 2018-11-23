@@ -1,0 +1,3 @@
+Commit SHA,Java File,Old function signature,New function signature
+fc1717d15004591ec7d1e9aef616286cac8ae53e,EzTextingConnection.java,private String get(String relUrl  Hashtable<String  String> getParams) throws IOException  EzTextingException  Exception ,private String get(String relUrl) throws IOException  EzTextingException  Exception 
+fc1717d15004591ec7d1e9aef616286cac8ae53e,EzTextingConnection.java,private String get(String relUrl) throws IOException  EzTextingException  Exception ,private String get(String relUrl  Hashtable<String  Object> getParams) throws IOException  EzTextingException  Exception 
