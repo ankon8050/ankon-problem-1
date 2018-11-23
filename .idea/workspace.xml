@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b66c6e42-39b2-49d5-9c9a-db279a1fd02e" name="Default" comment="" />
+    <list default="true" id="b66c6e42-39b2-49d5-9c9a-db279a1fd02e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,7 +28,7 @@
       <file leaf-file-name="FetchCommit.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ankon/problem1/FetchCommit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2985">
+            <state relative-caret-position="388">
               <caret line="224" column="5" lean-forward="false" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
               <folding />
             </state>
@@ -294,12 +296,12 @@
       <workItem from="1542832960588" duration="8611000" />
       <workItem from="1542875829674" duration="281000" />
       <workItem from="1542917991571" duration="12881000" />
-      <workItem from="1542932891012" duration="399000" />
+      <workItem from="1542932891012" duration="530000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22172000" />
+    <option name="totallyTimeSpent" value="22303000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -563,7 +565,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ankon/problem1/FetchCommit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2985">
+        <state relative-caret-position="388">
           <caret line="224" column="5" lean-forward="false" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
           <folding />
         </state>
