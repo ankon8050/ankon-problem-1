@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b66c6e42-39b2-49d5-9c9a-db279a1fd02e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/FetchCommit.java_new_77964262b7d2c9b7c18c5f9a9f476824b20f55f3.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/FetchCommit.java_new_e053f05003e97e6df188c0289c0171d78832ace4.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/FetchCommit.java_old_77964262b7d2c9b7c18c5f9a9f476824b20f55f3^.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/FetchCommit.java_old_e053f05003e97e6df188c0289c0171d78832ace4^.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/ankon/problem1/FetchCommit.class" afterPath="$PROJECT_DIR$/target/classes/com/ankon/problem1/FetchCommit.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ankon/problem1/FetchCommit.java" afterPath="$PROJECT_DIR$/src/main/java/com/ankon/problem1/FetchCommit.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -34,101 +30,22 @@
       <file leaf-file-name="FetchCommit.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ankon/problem1/FetchCommit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="37" column="11" lean-forward="false" selection-start-line="37" selection-start-column="11" selection-end-line="37" selection-end-column="11" />
-              <folding>
-                <element signature="e#4271#4326#0" expanded="false" />
-                <element signature="e#5351#5380#0" expanded="false" />
-                <element signature="method#getPrevHash#0;class#FetchCommit#0" expanded="false" />
-                <element signature="method#getCanonicalTreeParser#0;class#FetchCommit#0" expanded="false" />
-                <element signature="method#compareFiles#0;class#FetchCommit#0" expanded="false" />
-                <element signature="method#compareFiles1#0;class#FetchCommit#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Result.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/ankon/problem1/domain/Result.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="49" column="18" lean-forward="false" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
-              <folding>
-                <element signature="e#414#415#0" expanded="true" />
-                <element signature="e#440#441#0" expanded="true" />
-                <element signature="e#478#479#0" expanded="true" />
-                <element signature="e#508#509#0" expanded="true" />
-                <element signature="e#543#544#0" expanded="true" />
-                <element signature="e#574#575#0" expanded="true" />
-                <element signature="e#622#623#0" expanded="true" />
-                <element signature="e#662#663#0" expanded="true" />
-                <element signature="e#701#702#0" expanded="true" />
-                <element signature="e#736#737#0" expanded="true" />
-                <element signature="e#792#793#0" expanded="true" />
-                <element signature="e#840#841#0" expanded="true" />
-                <element signature="e#879#880#0" expanded="true" />
-                <element signature="e#914#915#0" expanded="true" />
-                <element signature="e#970#971#0" expanded="true" />
-                <element signature="e#1018#1019#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test1.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/ankon/problem1/testclasses/test1.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="30" lean-forward="false" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
-              <folding>
-                <element signature="e#181#182#0" expanded="true" />
-                <element signature="e#218#219#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ObjectStream.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jgit/org.eclipse.jgit/5.0.3.201809091024-r/org.eclipse.jgit-5.0.3.201809091024-r-sources.jar!/org/eclipse/jgit/lib/ObjectStream.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1997">
-              <caret line="51" column="22" lean-forward="false" selection-start-line="51" selection-start-column="22" selection-end-line="51" selection-end-column="22" />
+            <state relative-caret-position="645">
+              <caret line="224" column="5" lean-forward="false" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ObjectLoader.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jgit/org.eclipse.jgit/5.0.3.201809091024-r/org.eclipse.jgit-5.0.3.201809091024-r-sources.jar!/org/eclipse/jgit/lib/ObjectLoader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2281">
-              <caret line="61" column="22" lean-forward="false" selection-start-line="61" selection-start-column="22" selection-end-line="61" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DiffEntry.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jgit/org.eclipse.jgit/5.0.3.201809091024-r/org.eclipse.jgit-5.0.3.201809091024-r-sources.jar!/org/eclipse/jgit/diff/DiffEntry.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5775">
-              <caret line="455" column="22" lean-forward="false" selection-start-line="455" selection-start-column="22" selection-end-line="455" selection-end-column="22" />
-              <folding>
-                <element signature="e#13797#13798#0" expanded="true" />
-                <element signature="e#13821#13822#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CookbookHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/ankon/problem1/helper/CookbookHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="26" column="18" lean-forward="false" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="30">
+                <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+                <folding />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -165,6 +82,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/ankon/problem1/testclasses/test1.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/ankon/problem1/domain/Result.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/ankon/problem1/FetchCommit.java" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -392,12 +310,12 @@
       <updated>1542832959052</updated>
       <workItem from="1542832960588" duration="8611000" />
       <workItem from="1542875829674" duration="281000" />
-      <workItem from="1542917991571" duration="12426000" />
+      <workItem from="1542917991571" duration="12881000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21318000" />
+    <option name="totallyTimeSpent" value="21773000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -411,9 +329,9 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41112456" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41112456" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31082425" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31076178" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16237482" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -476,14 +394,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2025">
           <caret line="155" column="16" lean-forward="false" selection-start-line="155" selection-start-column="16" selection-end-line="155" selection-end-column="16" />
-          <folding>
-            <element signature="e#4271#4326#0" expanded="false" />
-            <element signature="e#5351#5380#0" expanded="false" />
-            <element signature="method#getPrevHash#0;class#FetchCommit#0" expanded="false" />
-            <element signature="method#getCanonicalTreeParser#0;class#FetchCommit#0" expanded="false" />
-            <element signature="method#compareFiles#0;class#FetchCommit#0" expanded="false" />
-            <element signature="method#compareFiles1#0;class#FetchCommit#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -520,14 +431,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2025">
           <caret line="155" column="16" lean-forward="false" selection-start-line="155" selection-start-column="16" selection-end-line="155" selection-end-column="16" />
-          <folding>
-            <element signature="e#4271#4326#0" expanded="false" />
-            <element signature="e#5351#5380#0" expanded="false" />
-            <element signature="method#getPrevHash#0;class#FetchCommit#0" expanded="false" />
-            <element signature="method#getCanonicalTreeParser#0;class#FetchCommit#0" expanded="false" />
-            <element signature="method#compareFiles#0;class#FetchCommit#0" expanded="false" />
-            <element signature="method#compareFiles1#0;class#FetchCommit#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -536,14 +440,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="89" column="11" lean-forward="false" selection-start-line="89" selection-start-column="11" selection-end-line="89" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -684,18 +580,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="30">
+            <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ankon/problem1/FetchCommit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="37" column="11" lean-forward="false" selection-start-line="37" selection-start-column="11" selection-end-line="37" selection-end-column="11" />
-          <folding>
-            <element signature="e#4271#4326#0" expanded="false" />
-            <element signature="e#5351#5380#0" expanded="false" />
-            <element signature="method#getPrevHash#0;class#FetchCommit#0" expanded="false" />
-            <element signature="method#getCanonicalTreeParser#0;class#FetchCommit#0" expanded="false" />
-            <element signature="method#compareFiles#0;class#FetchCommit#0" expanded="false" />
-            <element signature="method#compareFiles1#0;class#FetchCommit#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="645">
+          <caret line="224" column="5" lean-forward="false" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
